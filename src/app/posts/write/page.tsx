@@ -38,7 +38,7 @@ export default function Write() {
             .then(data => {
                 alert(data.msg);
                 //상세 페이지 이동
-                router.push(`/posts/${data.data.postDto.id}`)
+                router.replace(`/posts/${data.data.postDto.id}`)
 
             })
 
@@ -51,7 +51,9 @@ export default function Write() {
             <form action="" onSubmit={onSubmitHandler} className="flex flex-col gap-4">
                 <input type="text" name="title" className="border-1 rounded p-2" placeholder="제목을 입력해주세요" />
                 <textarea rows={10} name="content" className="border-1 rounded p-2" placeholder="내용을 입력해주세요"></textarea>
-                <input type="submit" value="작성" className="border-1 rounded p-2" />
+                <button className="bg-blue-500 text-white p-2 rounded" type="submit">
+                    저장
+                </button>
             </form>
         </>
     )
