@@ -1,29 +1,38 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
+interface Post {
+    id: number;
+    title: string;
+}
+
 export default function Home() {
-    const posts = [
-        { id: 1, title: "글1" },
-        { id: 2, title: "글2" },
-        { id: 3, title: "글3" },
-        { id: 4, title: "글4" },
-        { id: 5, title: "글5" },
-        { id: 6, title: "글6" },
-        { id: 7, title: "글7" },
-        { id: 8, title: "글8" },
-        { id: 9, title: "글9" },
-        { id: 10, title: "글10" },
-    ];
+    const [posts, setPosts] = useState<Post[]>([]);
+
+    //javascript 요청 보내기 = fetch
+    useEffect(() => {
+        fetch("http://localhost:8080/api/v1/posts")
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                setPosts(data);
+            })
+    }, []);
 
     return (
-        <div>
-            <h1>게시글 목록</h1>
-            <ul>
-                {posts.map((post) => (
-                    <li key={post.id}>
-                        {post.id} : {post.title}
-                    </li>
-                ))}
-            </ul>
-        </div>
+        posts.length <= 0
+            ? <div>로딩중..</div>
+            :
+            (<div>
+                <h1>게시글 목록</h1>
+                <ul>
+                    {posts.map((post) => (
+                        <li key={post.id} className="p-2">
+                            {post.id} : {post.title}
+                        </li>
+                    ))}
+                </ul>
+            </div>)
     );
 }
