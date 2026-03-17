@@ -1,5 +1,6 @@
 "use client";
 
+import { fetchApi } from "@/lib/client";
 import { useRouter } from "next/navigation";
 
 export default function Write() {
@@ -24,7 +25,7 @@ export default function Write() {
             return;
         }
         //db에 저장장
-        fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/posts`, {
+        fetchApi(`/api/v1/posts`, {
             method: "POST",
             headers: {
                 "Content-type": "application/json"
@@ -34,7 +35,6 @@ export default function Write() {
                 "content": content.value
             })
         })
-            .then(response => response.json())
             .then(data => {
                 alert(data.msg);
                 //상세 페이지 이동
