@@ -21,15 +21,18 @@ export default function Home() {
     }, []);
 
     return (
-        <div>
-            <h1>게시글 목록</h1>
-            <ul>
-                {posts.map((post) => (
-                    <li key={post.id} className="p-2">
-                        {post.id} : {post.title}
-                    </li>
-                ))}
-            </ul>
-        </div>
+        posts.length <= 0
+            ? <div>로딩중..</div>
+            :
+            (<div>
+                <h1>게시글 목록</h1>
+                <ul>
+                    {posts.map((post) => (
+                        <li key={post.id} className="p-2">
+                            {post.id} : {post.title}
+                        </li>
+                    ))}
+                </ul>
+            </div>)
     );
 }
