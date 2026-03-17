@@ -1,35 +1,34 @@
-"use client";
+"use client"
 
+import { fetchApi } from "@/lib/client";
 import { PostDto } from "@/type/post";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function Home() {
+
     const [posts, setPosts] = useState<PostDto[]>([]);
 
-    //javascript 요청 보내기 = fetch
     useEffect(() => {
-        fetch("http://localhost:8080/api/v1/posts")
-            .then(response => response.json())
+
+        fetchApi(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/posts`)
             .then(data => {
                 console.log(data)
                 setPosts(data);
-            })
+            });
+
     }, []);
+
 
     return (
         posts.length <= 0
             ? <div>로딩중..</div>
-            :
-            (<div>
-                <h1>게시글 목록</h1>
-                <ul>
-                    {posts.map((post) => (
-                        <li key={post.id} className="p-2">
-                            <Link href={`/posts/${post.id}`}>{post.id} : {post.title}</Link>
-                        </li>
-                    ))}
-                </ul>
-            </div>)
-    );
+            : <ul>
+                {posts.map((post) => (
+                    <li key={post.id} className="p-2">
+                        <Link href={`/posts/${post.id}`}>{post.id}. {post.title}</Link>
+                    </li>
+                ))}
+            </ul>
+    )
 }
