@@ -1,16 +1,11 @@
 "use client";
 
+import { PostDto } from "@/type/post";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-export interface Post {
-    id: number,
-    title: string,
-    content: string
-}
-
 export default function Home() {
-    const [posts, setPosts] = useState<Post[]>([]);
+    const [posts, setPosts] = useState<PostDto[]>([]);
 
     //javascript 요청 보내기 = fetch
     useEffect(() => {
