@@ -1,11 +1,13 @@
 "use client";
 
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { PostDto } from "@/type/post";
 import { fetchApi } from "@/lib/client";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
-export default function Home() {
+export default function Detail() {
 
     const [post, setPost] = useState<PostDto | null>(null);
     const { id } = useParams();
@@ -15,6 +17,7 @@ export default function Home() {
 
         fetchApi(`/api/v1/posts/${id}`)
             .then(data => setPost(data));
+
 
     }, []);
 
@@ -40,7 +43,11 @@ export default function Home() {
                         <h1>{post.title}</h1>
                         <div>{post.content}</div>
                     </div>
-                    <div>
+                    <div className="flex gap-4">
+                        <Link
+                            href={`/posts/${post.id}/edit`}
+                            className="border-1 rounded p-2 bg-blue-500">
+                            수정</Link>
                         <button
                             onClick={() => {
                                 onDeleteHandler(post.id);
@@ -51,6 +58,4 @@ export default function Home() {
             }
         </>
     )
-
-
 }
